@@ -127,6 +127,8 @@ def rerank(cands, eps_by_num, client, alpha=0.5, workers=2):
     with ThreadPoolExecutor(workers) as ex:
         res = list(ex.map(one, cands))
     ok = sum(1 for r in res if r is not None)
+    client.last_ok, client.last_total = ok, len(cands)
+    client.last_error = errors[0] if errors else ""
     print(f"LLM re-rank: {ok}/{len(cands)} clips scored", file=sys.stderr)
     if errors:
         print(f"LLM errors: {len(errors)}; first: {errors[0]}", file=sys.stderr)

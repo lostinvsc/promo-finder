@@ -57,6 +57,14 @@ if files and st.button("Find promos", type="primary"):
         shortlisted = shortlist(pool, 80, 4, 0.0)
         rerank(shortlisted, by, client)
         pool = shortlisted
+        if client.last_ok == 0:
+            st.error(f"LLM re-rank FAILED: 0/{client.last_total} clips scored, so the results below are rules-only. "
+                     f"First error: {client.last_error}")
+        else:
+            st.info(f"LLM re-rank: {client.last_ok}/{client.last_total} clips scored."
+                    + (f" First error: {client.last_error}" if client.last_error else ""))
+    elif use_llm and not key:
+        st.warning("LLM box is ticked but no API key was entered, so the results are rules-only.")
     recs = build_records(rank(shortlist(pool, top, per_ep, min_score)), by)
     st.session_state["recs"] = recs
     st.session_state["n_eps"] = len(eps)
