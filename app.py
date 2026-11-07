@@ -69,7 +69,7 @@ if recs:
         "segments": " + ".join(f"{s['start']}-{s['end']}" for s in r["segments"]),
         "sec": r["duration_sec"], "score": r["score"], "hook": r["hook"], "cliffhanger": r["cliffhanger"],
         "why": r["why_it_works"], "flags": "; ".join(r["flags"])} for r in recs])
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    st.dataframe(df, width="stretch", hide_index=True)
     c1, c2 = st.columns(2)
     c1.download_button("Download CSV", df.to_csv(index=False), "promos.csv")
     import json
