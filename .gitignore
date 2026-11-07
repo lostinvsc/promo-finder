@@ -1,0 +1,12 @@
+pack/
+data/
+script/
+outputs/
+outputs_*/
+.llm_cache/
+venv/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
